@@ -1,4 +1,3 @@
-// script.js
 let grid = [];
 const rows = 15;
 const cols = 15;
@@ -64,7 +63,8 @@ function handleCellClick(event) {
     if (settingStart) {
         if (startNode) {
             startNode.isStart = false;
-            document.querySelector(`.grid-item[data-row="${startNode.row}"][data-col="${startNode.col}"]`).classList.remove('start');
+            // document.querySelector(`.grid-item[data-row="${startNode.row}"][data-col="${startNode.col}"]`).classList.remove('start'); sin Jquery
+            $('.grid-item[data-row="' + startNode.row + '"][data-col="' + startNode.col + '"]').removeClass('start');  // con Jquery
         }
         cell.isStart = true;
         event.target.classList.add('start');
@@ -73,7 +73,8 @@ function handleCellClick(event) {
     } else if (settingEnd) {
         if (endNode) {
             endNode.isEnd = false;
-            document.querySelector(`.grid-item[data-row="${endNode.row}"][data-col="${endNode.col}"]`).classList.remove('end');
+            // document.querySelector(`.grid-item[data-row="${endNode.row}"][data-col="${endNode.col}"]`).classList.remove('end');  sin Jquery
+            $('.grid-item[data-row="' + endNode.row + '"][data-col="' + endNode.col + '"]').removeClass('end'); // con Jquery
         }
         cell.isEnd = true;
         event.target.classList.add('end');
