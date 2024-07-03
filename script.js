@@ -1,6 +1,6 @@
 let grid = [];
-const rows = 15;
-const cols = 15;
+const rows = 12;
+const cols = 12;
 let startNode = null;
 let endNode = null;
 let settingStart = false;
@@ -10,7 +10,7 @@ let addingObstacle = false;
 document.addEventListener('DOMContentLoaded', () => {
     const gridContainer = document.getElementById('grid-container');
 
-    // Initialize grid
+        // Se inicializa la matriz de nodos
     for (let i = 0; i < rows; i++) {
         grid[i] = [];
         for (let j = 0; j < cols; j++) {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
     }
-
+    // Se agrega el evento click a los botones
     document.getElementById('set-start').addEventListener('click', () => {
         settingStart = true;
         settingEnd = false;
@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-pathfinding').addEventListener('click', startPathfinding);
 });
 
+// Función que se ejecuta al hacer click en una celda
 function handleCellClick(event) {
     const row = event.target.dataset.row;
     const col = event.target.dataset.col;
@@ -63,8 +64,8 @@ function handleCellClick(event) {
     if (settingStart) {
         if (startNode) {
             startNode.isStart = false;
-            // document.querySelector(`.grid-item[data-row="${startNode.row}"][data-col="${startNode.col}"]`).classList.remove('start'); sin Jquery
-            $('.grid-item[data-row="' + startNode.row + '"][data-col="' + startNode.col + '"]').removeClass('start');  // con Jquery
+            document.querySelector(`.grid-item[data-row="${startNode.row}"][data-col="${startNode.col}"]`).classList.remove('start'); // sin Jquery
+            // $('.grid-item[data-row="' + startNode.row + '"][data-col="' + startNode.col + '"]').removeClass('start');  // con Jquery
         }
         cell.isStart = true;
         event.target.classList.add('start');
@@ -73,8 +74,8 @@ function handleCellClick(event) {
     } else if (settingEnd) {
         if (endNode) {
             endNode.isEnd = false;
-            // document.querySelector(`.grid-item[data-row="${endNode.row}"][data-col="${endNode.col}"]`).classList.remove('end');  sin Jquery
-            $('.grid-item[data-row="' + endNode.row + '"][data-col="' + endNode.col + '"]').removeClass('end'); // con Jquery
+            document.querySelector(`.grid-item[data-row="${endNode.row}"][data-col="${endNode.col}"]`).classList.remove('end'); // sin Jquery
+            // $('.grid-item[data-row="' + endNode.row + '"][data-col="' + endNode.col + '"]').removeClass('end'); // con Jquery
         }
         cell.isEnd = true;
         event.target.classList.add('end');
@@ -88,7 +89,7 @@ function handleCellClick(event) {
 
 async function startPathfinding() {
     if (!startNode || !endNode) {
-        alert('Please set both a start and an end point.');
+        alert('Por favor coloca un inicio y un final');
         return;
     }
 
@@ -114,7 +115,7 @@ async function startPathfinding() {
                 temp = temp.previous;
             }
 
-            // Remove current and searched classes before marking the path
+            // Removemos las clases de los nodos antes de pintar el camino
             document.querySelectorAll('.grid-item').forEach(item => {
                 item.classList.remove('current');
                 item.classList.remove('searched');
@@ -158,17 +159,17 @@ async function startPathfinding() {
         await sleep(50); // Slow down for visualization
     }
 
-    alert('No path found');
+    alert('No se encontro ningun camino');
 }
 
 function getNeighbors(node) {
     const neighbors = [];
     const { row, col } = node;
 
-    if (row > 0) neighbors.push(grid[row - 1][col]);
-    if (row < rows - 1) neighbors.push(grid[row + 1][col]);
-    if (col > 0) neighbors.push(grid[row][col - 1]);
-    if (col < cols - 1) neighbors.push(grid[row][col + 1]);
+    if (row > 0) neighbors.push(grid[row - 1][col]); // Arriba
+    if (row < rows - 1) neighbors.push(grid[row + 1][col]); // Abajo
+    if (col > 0) neighbors.push(grid[row][col - 1]); // Izquierda
+    if (col < cols - 1) neighbors.push(grid[row][col + 1]); // Derecha
 
     return neighbors;
 }
